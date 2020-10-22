@@ -1,0 +1,27 @@
+<div *ngIf="post">
+  <div class="container mt-4">
+    <h1 class="text-center">{{post.title}}</h1>
+    <h3 class="" routerLink="/user/{{post.userId}}" class="text-center">{{post.userName}} {{post.userSurname}}</h3>
+    <h5 class="text-center">{{post.dateAdded | date:"dd.MM.y"}}</h5>
+    <h5 *ngIf="post.dateUpdated" class="text-center">Son Güncelleme: {{post.dateUpdated | date:"dd.MM.y"}}</h5>
+    <h5 *ngIf="isAdmin()" routerLink="/postUpdate/{{post.id}}" class="text-center">Güncelle</h5>
+    <img class="rounded mt-2" style="height:600px; width:100%" [src]="postService.createImgPath(post.photoUrl)">
+  </div>
+  <section class="site-section py-lg">
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-8">
+          <p [innerHTML]="post.text">{{post.text}}</p>
+          <div class="pt-3">
+            <p>Kategori: <a href="#">{{post.categoryName}}</a></p>
+            <app-comment [postId]="postId"></app-comment>
+          </div>
+        </div>
+        <div class="col-4">
+          <app-last-posts></app-last-posts>
+          <app-category></app-category>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

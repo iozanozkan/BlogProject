@@ -1,0 +1,26 @@
+<div *ngIf="user" class="container">
+    <div class="row mt-3 mb-3">
+        <div class="col-12">
+            <h2>{{user.name}} {{user.surname}} yazdı</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            <app-post-of-user></app-post-of-user>
+        </div>
+        <div class="col-4">
+            <div class="d-flex flex-column mb-5">
+                <div class="align-self-center mb-3">
+                    <img style="height:200px; width: 200px; border-radius: 50%;"
+                        [src]="userService.createImgPath(user.photoUrl)">
+                    </div>
+                <div class="align-self-center mb-2">{{user.username}}</div>
+                <div class="align-self-center mb-2">{{user.name}} {{user.surname}}</div>
+                <div class="align-self-center mb-2">{{user.email}}</div>
+                <div *ngIf="isAuthenticated && isCurrentUser" class="align-self-center"><a routerLink="/userUpdate">Düzenle</a></div>
+            </div>
+            <app-last-posts></app-last-posts>
+            <app-category></app-category>
+        </div>
+    </div>
+</div>

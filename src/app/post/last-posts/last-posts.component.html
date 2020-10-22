@@ -1,0 +1,9 @@
+<h3 class="heading mx-3">Son Gönderiler</h3>
+<div *ngFor="let post of posts">
+  <div class="card-body pr-0">
+    <a routerLink="/postDetail/{{post.id}}"><img style="height: 200px; width: 100%;" class="rounded" [src]="postService.createImgPath(post.photoUrl)"></a>
+    <h4 class="card-title mt-3"><a class="card-link" routerLink="/postDetail/{{post.id}}">{{post.title}}</a></h4>
+    <span class="mr-2">{{post.dateAdded | date:"dd.MM.yyyy"}}</span>
+    <a class="card-link" routerLink="/user/{{post.userId}}"><p class="card-text">{{post.userName}} {{post.userSurname}}</p></a>
+  </div>
+</div>

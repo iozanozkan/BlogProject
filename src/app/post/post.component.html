@@ -1,0 +1,28 @@
+<section class="site-section py-lg">
+  <div class="container">
+    <div class="row mt-3 mb-3">
+      <div class="col-12">
+        <h2>Gönderiler</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div *ngFor="let post of posts" class="col-md-6">
+        <div class="card mb-5"> <img style="height: 300px; width: 100%; display: block;"
+            [src]="postService.createImgPath(post.photoUrl)" alt="Card image">
+          <h3 routerLink="/postDetail/{{post.id}}" class="card-header">{{post.title}}</h3>
+          <div class="card-body">
+            <p [innerHTML]="post.text.slice(0, 200)"></p>
+            <a routerLink="/postDetail/{{post.id}}" class="card-link">Devamını Oku</a>
+            <a *ngIf="isAdmin()" routerLink="/postUpdate/{{post.id}}" class="card-link">Güncelle</a>
+            <a *ngIf="isAdmin()" class="card-link" (click)="delete(post)">Sil</a>
+            <h5 routerLink="/byCategory/{{post.categoryId}}" class="card-title">{{post.categoryName}}</h5>
+          </div>
+          <div class="card-footer text-muted">
+            <a routerLink="/user/{{post.userId}}" class="card-link" routerLink="">{{post.userName}} {{post.userSurname}}</a> &nbsp;-&nbsp;
+            {{post.dateAdded | date: "dd.MM.y"}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

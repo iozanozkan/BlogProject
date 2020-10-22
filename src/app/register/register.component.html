@@ -1,0 +1,51 @@
+<main role="main" style="margin-bottom: 80px;">
+  <div class="container">
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+      <fieldset>
+        <legend>Kayıt ol</legend>
+        <div class="form-group">
+          <input type="text" id="name" name="name" formControlName="name" class="form-control" placeholder="İsim"
+            autofocus>
+          <div *ngIf="registerForm.get('name').hasError('required') && registerForm.get('name').touched"
+            class="alert alert-danger">İsim gerekli</div>
+        </div>
+        <div class="form-group">
+          <input type="text" id="surname" name="surname" formControlName="surname" class="form-control"
+            placeholder="Soyisim" autofocus>
+          <div *ngIf="registerForm.get('surname').hasError('required') && registerForm.get('surname').touched"
+          class="alert alert-danger">Soyisim gerekli</div>
+        </div>
+        <div class="form-group">
+          <input type="text" id="email" name="email" formControlName="email" class="form-control" placeholder="E-mail"
+            autofocus>
+          <div *ngIf="registerForm.get('email').hasError('required') && registerForm.get('email').touched"
+          class="alert alert-danger">E-mail gerekli</div>
+        </div>
+        <div class="form-group">
+          <input type="text" id="username" name="username" formControlName="username" class="form-control"
+            placeholder="Kullanıcı adı" autofocus>
+          <div *ngIf="registerForm.get('username').hasError('required') && registerForm.get('username').touched"
+          class="alert alert-danger">Kullanıcı adı gerekli</div>
+        </div>
+        <div class="form-group">
+          <input type="password" id="password" name="password" formControlName="password" class="form-control"
+            placeholder="Şifre">
+          <div *ngIf="registerForm.get('password').hasError('required') && registerForm.get('password').touched"
+          class="alert alert-danger">Şifre gerekli</div>
+          <div *ngIf="registerForm.get('password').hasError('minlength') && registerForm.get('password').touched"
+          class="alert alert-danger">Şifre en az 4 karakter olmalıdır</div>
+        </div>
+        <div class="form-group">
+          <input type="password" id="confirmPassword" name="confirmPassword" formControlName="confirmPassword"
+            class="form-control" placeholder="Şifre Onay">
+          <div *ngIf="registerForm.get('confirmPassword').hasError('required') && registerForm.get('confirmPassword').touched"
+          class="alert alert-danger">Şifre doğrulama gerekli</div>
+          <div *ngIf="registerForm.get('confirmPassword').touched && registerForm.hasError('mismatch')"
+          class="alert alert-danger">Şifreler uyumsuz</div>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" [disabled]="!registerForm.valid" type="submit">Kayıt
+          Ol</button>
+      </fieldset>
+    </form>
+  </div>
+</main>

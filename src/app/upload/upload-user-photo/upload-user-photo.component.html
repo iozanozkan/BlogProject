@@ -1,0 +1,9 @@
+<div class="row" style="margin-bottom:15px;">
+  <div class="col-md-12"> 
+  <button class="file-upload-button">
+    <img *ngIf="previewUrl != null" [src]=previewUrl>
+    <img *ngIf="previewUrl === null" [src]="uploadService.createImgPath(photoUrl)">
+      <input formControlName="file" #file id="file" type="file" class="form-control" (change)="uploadFile(file.files)">
+    </button>
+  </div>
+</div>

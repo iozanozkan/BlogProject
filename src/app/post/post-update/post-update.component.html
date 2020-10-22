@@ -1,0 +1,38 @@
+<main *ngIf="post" role="main" style="margin-bottom: 80px;">
+  <div class="container">
+    <div>
+      <form [formGroup]="postUpdateForm" (ngSubmit)="update()">
+        <fieldset>
+          <legend>Gönderi Paylaş</legend>
+          <div class="form-group">
+            <label for="title">Başlık</label>
+            <input type="text" value="{{post.title}}" formControlName="title" class="form-control" id="title">
+            <span class="help-block"
+              *ngIf="postUpdateForm.get('title').hasError('required') && postUpdateForm.get('title').touched">
+              Lütfen başlık giriniz
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="photoUrl">Gönderi Fotoğrafı</label>
+              <app-upload-post-photo [photoUrl]="post.photoUrl" (onUploadFinished)="uploadFinished($event)"></app-upload-post-photo >
+          </div>
+          <div class="form-group">
+            <label for="category">Kategori</label>
+            <select class="form-control" formControlName="categoryId" id="categoryId">
+              <option *ngFor="let category of categories" [ngValue]="category.id">{{category.name}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="text">Metin</label>
+            <editor [init]="{height: 400}" formControlName="text" id="text"></editor>
+            <span class="help-block"
+              *ngIf="postUpdateForm.get('text').hasError('required') && postUpdateForm.get('text').touched">
+              Lütfen yazınızı yazınız
+            </span>
+          </div>
+          <button type="submit" class="btn btn-primary">Paylaş</button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</main>

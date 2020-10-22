@@ -1,0 +1,7 @@
+<h3 class="heading mx-3 my-3">Kategoriler</h3>
+<ul class="list-group ml-3 mb-5">
+  <li *ngFor="let category of categories" class="list-group-item d-flex justify-content-between align-items-center">
+    <a class="card-link" routerLink="/byCategory/{{category.id}}">{{category.name}}</a>
+    <span class="badge badge-primary badge-pill">{{category.posts.length}}</span>
+  </li>
+</ul>

@@ -1,0 +1,71 @@
+<div class="pt-2">
+  <h3 *ngIf="comments && comments.length>0" class="mb-1">{{comments.length}} Yorum</h3>
+  <h3 *ngIf="comments && comments.length==0" class="mb-1">İlk Yorumu Siz Yapın</h3>
+  <div *ngFor="let comment of comments" class="card border-light mb-3 pl-3">
+    <div class="card-body">
+      <div class="row"> <img class="mr-3" style="height:50px; width: 50px; border-radius: 50%;"
+          [src]="userService.createImgPath(comment.userPhotoUrl)">
+        <h4 routerLink="/user/{{comment.userId}}" class="card-title mr-3">{{comment.userName}}
+          {{comment.userSurname}}</h4>
+        <p class="card-title mt-1"><small>{{comment.dateAdded | date:"dd.MM.y hh:mm:ss"}}</small></p>
+        <p *ngIf="commentHasCurrentUser(comment.userId)" class="card-title mt-1 ml-5"><a class="card-link"
+            (click)="delete(comment)">Sil</a></p>
+        <p *ngIf="isAuthenticated" class="card-title mt-1 ml-5"><a class="card-link"
+            (click)="showReplyComment(comment.id)">Yanıtla</a></p>
+      </div>
+      <p class="card-text mt-2 ml-5">{{comment.text}}</p>
+      <div *ngFor="let scomment of subComments">
+        <div *ngIf="comment.id == scomment.parentId" class="card border-light mb-3 pl-3">
+          <div class="card-body">
+            <div class="row"> <img class="mr-3" style="height:50px; width: 50px; border-radius: 50%;"
+                [src]="userService.createImgPath(scomment.userPhotoUrl)">
+              <h4 routerLink="/user/{{scomment.userId}}" class="card-title mr-3">{{scomment.userName}}
+                {{scomment.userSurname}}</h4>
+              <p class="card-title mt-1"><small>{{scomment.dateAdded | date:"dd.MM.y hh:mm:ss"}}</small></p>
+              <p *ngIf="commentHasCurrentUser(scomment.userId)" class="card-title mt-1 ml-5"><a class="card-link"
+                  (click)="delete(scomment)">Sil</a></p>
+            </div>
+            <p class="card-text mt-2 ml-5">{{scomment.text}}</p>
+          </div>
+        </div>
+      </div>
+      <form *ngIf="showVar[comment.id]" [formGroup]="commentAddForm" (ngSubmit)="add(comment.id)" action="#" class="p-5 bg-light">
+        <div class="form-group">
+          <label for="message">Yorum</label>
+          <textarea name="text" id="text" formControlName="text" cols="30" rows="10" class="form-control"></textarea>
+          <span class="help-block"
+            *ngIf="commentAddForm.get('text').hasError('required') && commentAddForm.get('text').touched">
+            Yorum yapmayacak mısınız?
+          </span>
+        </div>
+        <div class="form-group">
+          <button type="submit" [disabled]="!commentAddForm.valid" class="btn btn-primary">Yorumu
+            Gönder</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="comment-form-wrap pt-1">
+    <h3 class="mb-2">Yorum Yap</h3>
+    <form *ngIf="isAuthenticated" [formGroup]="commentAddForm" (ngSubmit)="add()" action="#" class="p-5 bg-light">
+      <div class="form-group">
+        <label for="message">Yorum</label>
+        <textarea name="text" id="text" formControlName="text" cols="30" rows="10" class="form-control"></textarea>
+        <span class="help-block"
+          *ngIf="commentAddForm.get('text').hasError('required') && commentAddForm.get('text').touched">
+          Yorum yapmayacak mısınız?
+        </span>
+      </div>
+      <div class="form-group">
+        <button type="submit" [disabled]="!commentAddForm.valid" class="btn btn-primary">Yorumu
+          Gönder</button>
+      </div>
+    </form>
+    <form *ngIf="!isAuthenticated" [formGroup]="commentAddForm" (ngSubmit)="add()" action="#" class="p-5 bg-light">
+      <div class="form-group">
+        <label for="message">Yorum yapmak için üye olmanız gerekmektedir.</label><br>
+        <a routerLink="/register">Üye Ol</a>
+      </div>
+    </form>
+  </div>
+</div>
